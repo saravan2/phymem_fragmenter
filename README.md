@@ -11,14 +11,16 @@ rmmode and insmod multiple times to exhaust all relevant higher order pages.
 
 KLMs free the fragmented pages held in custody upon module exit.
 
-Usage :
+**Usage**
 
-KVERSION=<version> make  {all|debug|clean}
+`KVERSION=<version> make  {all|debug|clean}`
 
+```
 cat /proc/buddyinfo
 Node 0, zone      DMA      0      0      0      0      0      0      0      0      1      1      3
 Node 0, zone    DMA32    353    353    352    352    353    353    354    321    304    319     63
 Node 0, zone   Normal  21040  26612  21485  10084   4682   1935    824    411    158    150   3643
+
 
 insmod ./phymem_fragmenter.ko
 
@@ -43,3 +45,4 @@ rmmod phymem_fragmentor
 dmesg | tail -2f
 [  529.882863] Releasing all fragments
 [  529.882867] Released all fragments
+```
