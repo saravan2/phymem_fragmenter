@@ -10,22 +10,16 @@
 
 #define DEFAULT_ORDER 5
 
-struct fragment_entry {
-  struct page* page;
-  struct list_head list;
-};
-
 LIST_HEAD(fragment_list);
 
 int create_fragments(void) {
   struct page* page;
-  int j;
+  int next;
   while ((page = alloc_pages(GFP_KERNEL, DEFAULT_ORDER))) {
     split_page(page, DEFAULT_ORDER);
     list_add(&page->lru, &fragment_list);
-    page++;
-    for (j = 1; j < (1 << DEFAULT_ORDER); j++, page++)
-      __free_page(page);
+    for (next = 1; next < (1 << DEFAULT_ORDER); next++)
+      __free_page(page + next);
   }
   return 0;
 }
